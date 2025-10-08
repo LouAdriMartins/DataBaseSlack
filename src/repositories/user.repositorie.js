@@ -1,9 +1,6 @@
-import Users from "../models/User.model.js";
-
-
+import Users from "../models/User.model.js"
 class UserRepository {
     static async createUser(name, email, password){
-        //Logica de interaccion con la DB para crear el usuario
         await Users.insertOne({
             name: name,
             email: email,
@@ -13,7 +10,6 @@ class UserRepository {
     }
 
     static async getAll(){
-        //.find es un metodo para hacer filtro en una coleccion
         const users = await Users.find()
         return users
     }
@@ -33,13 +29,12 @@ class UserRepository {
             user_id, 
             new_values, 
             {
-                new: true //Cuando se haga la actualizacion nos traiga el objeto actualizado
+                new: true
             } 
         )
         return user_updated
     }
 
-    // Método para obtener un usuario por su email
     static async getByEmail(email) {
         const user_found = await Users.findOne({ email: email })
         return user_found

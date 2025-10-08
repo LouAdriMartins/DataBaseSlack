@@ -1,8 +1,5 @@
 import mongoose from 'mongoose'
 import ENVIRONMENT from './environment.config.js'
-/* 
-mongodb://localhost:27017/UTN_TN_SEPTIEMBRE_SLACK
-*/
 
 async function connectMongoDB() {
     try{
@@ -16,6 +13,5 @@ async function connectMongoDB() {
         console.log(error)
     }
 }
-
 
 export default connectMongoDB

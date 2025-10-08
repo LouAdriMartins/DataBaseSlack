@@ -1,5 +1,3 @@
-//Las funciones que se encargaran de manejar la consulta y la respuesta
-
 import WorkspacesRepository from "../repositories/workspace.repositorie.js"
 import ServerError from "../utils/customError.utils.js"
 import validarId from "../utils/validation.utils.js"
@@ -20,7 +18,6 @@ class WorkspaceController {
         }
         catch (error) {
             console.log(error)
-            //Evaluamos si es un error que nosotros definimos
             if (error.status) {
                 return response.status(error.status).json(
                     {
@@ -74,7 +71,6 @@ class WorkspaceController {
         }
         catch (error) {
             console.log(error)
-            //Evaluamos si es un error que nosotros definimos
             if (error.status) {
                 return response.status(error.status).json(
                     {
@@ -98,11 +94,8 @@ class WorkspaceController {
 
     static async post(request, response) {
         try {
-            //request.body es donde esta la carga util enviada por el cliente
-            //si aplicamos express.json() en nuestra app body siempre sera de tipo objeto
             const name = request.body.name
-            const url_img = request.body.url_img
-            //Validar que name este y que sea valido (por ejemplo un string no VACIO de no mas de 30 caracteres)
+            const url_img = request.url_img
             if (!name || typeof (name) !== 'string' || name.length > 30) {
                 throw new ServerError(
                     400,
@@ -116,9 +109,7 @@ class WorkspaceController {
                 )
             }
             else {
-                //Creamos el workspace con el repository
                 await WorkspacesRepository.createWorkspace(name, url_img)
-                //Si todo salio bien respondemos con {ok: true, message: 'Workspace creado con exito'}
                 return response.status(201).json({
                     ok: true,
                     status: 201,
@@ -128,7 +119,6 @@ class WorkspaceController {
         }
         catch (error) {
             console.log(error)
-            //Evaluamos si es un error que nosotros definimos
             if (error.status) {
                 return response.status(error.status).json(
                     {

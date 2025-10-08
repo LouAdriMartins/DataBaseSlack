@@ -1,12 +1,6 @@
-import ServerError from "../utils/customError.utils.js"
 import AuthService from "../services/auth.service.js"
-
+import ServerError from "../utils/customError.utils.js"
 class AuthController {
-    // lógica para registrar un nuevo usuario
-        /* 
-            Recibiremos un username, email, password
-            Validar los 3 campos
-            */
     static async register(request, response) {
         try {
             const {
@@ -14,19 +8,30 @@ class AuthController {
                 email, 
                 password
             } = request.body
-            // validamos los campos
-            if (!username) {
-                throw new ServerError(400, 'Debe ingresar un nombre de usuario valido')
+            console.log(request.body)
+            if(!username){
+                throw new ServerError(
+                    400, 
+                    'Debes enviar un nombre de usuario valido'
+                )
             }
-            else if (!email || !String(email).toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-                throw new ServerError(400, 'Debe ingresar un correo electronico valido')
+            else if(!email || !String(email).toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)){
+                throw new ServerError(
+                    400, 
+                    'Debes enviar un email valido'
+                )
             }
-            else if (!password || password.length < 8) {
-                throw new ServerError(400, 'Debe ingresar una contraseña valida')
+            else if(!password || password.length < 8){
+                throw new ServerError(
+                    400, 
+                    'Debes enviar una contraseña valida'
+                )
             }
             await AuthService.register(username, password, email)
             response.json({
-                ok: true
+                ok: true,
+                status: 200,
+                message: 'Usuario registrado correctamente'
             })
         }
         catch (error) {
@@ -55,12 +60,9 @@ class AuthController {
     static async login(request, response) {
         try{
             const {email, password} = request.body
-            /* 
-            - Validar que el email y password sean validas
-            */
             const { authorization_token } = await AuthService.login(email, password)
             return response.json({
-                ok: false,
+                ok: true,
                 message: 'Logueado con exito',
                 status: 200,
                 data: {
@@ -90,11 +92,11 @@ class AuthController {
             }
         }
     }
-
     static async verifyEmail(request, response) {
-        try {
-            const { verification_token } = request.params
+        try{
+            const {verification_token} = request.params
             await AuthService.verifyEmail(verification_token)
+
             return response.json({
                 ok: true, 
                 status: 200,
@@ -124,4 +126,5 @@ class AuthController {
         }
     }
 }
-export default AuthController
+
+export default AuthController   
