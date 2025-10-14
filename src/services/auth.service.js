@@ -21,11 +21,11 @@ class AuthService {
         const verification_token = jwt.sign(
             {
                 email: email,
-                user_id: user_created._id
+                user_id: user_created._id.toString()
             },
             ENVIRONMENT.JWT_SECRET_KEY
         )
-        const verification_link = `http://localhost:8080/api/auth/verify-email/${verification_token}`
+        const verification_link = `${ENVIRONMENT.URL_API}/api/auth/verify-email/${verification_token}`
         await transporter.sendMail({
             from: ENVIRONMENT.GMAIL_USER,
             to: ENVIRONMENT.GMAIL_USER,
