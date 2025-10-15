@@ -4,7 +4,7 @@ import ENVIRONMENT from './environment.config.js'
 async function connectMongoDB() {
     try{
         await mongoose.connect(ENVIRONMENT.MONGO_DB_CONNECTION_STRING, {
-            timeoutMS: 10000 //10s
+            timeoutMS: 30000 //30s
         })
         console.log('Conexion con MongoDB fue exitosa')
     }
