@@ -25,7 +25,6 @@ class AuthService {
             },
             ENVIRONMENT.JWT_SECRET_KEY
         )
-        const verification_link = `${ENVIRONMENT.URL_API}/api/auth/verify-email/${verification_token}`
         await transporter.sendMail({
             from: ENVIRONMENT.GMAIL_USER,
             to: ENVIRONMENT.GMAIL_USER,
@@ -33,7 +32,7 @@ class AuthService {
             html: `
             <h1>Hola desde node.js</h1>
             <p>Este es un mail de verificacion</p>
-            <a href='${verification_link}'>Verificar email</a>
+            <a href='${ENVIRONMENT.URL_API}/api/auth/verify-email/${verification_token}'>Verificar email</a>
             `
         })
     }
